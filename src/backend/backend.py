@@ -180,7 +180,7 @@ def addReport(request):
 
 # Create a natural language prompt for the OpenAI API
 def create_prompt(report, comments):
-    pompt_start = f"""
+    prompt_start = f"""
 Here is the summary of a end-of-term report for a student in a class:
 
 Over the course of the term, the student recieved an average of {report[5]}% in the class.
