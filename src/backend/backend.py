@@ -59,6 +59,20 @@ def getStudentAverage(school, studentId, classId):
     conn.close()
     return average
 
+reportCategories = {
+    "engagement": ["The student has been engaged in class discussions", "The student has lacked engagement in class discussions", "the student has improved their engagement in class discussions"],
+    "participation": ["The student has participated in class activities", "The student has not participated in class activities", "The student has improved their participation in class activities"],
+    "homework": ["The student has completed all homework assignments", "The student has not completed all homework assignments", "The student has improved their completion of homework assignments"],
+    "attitude": ["The student has had a positive attitude in class", "The student has had a negative attitude in class", "The student has improved their attitude in class"],
+    "respect": ["The student has shown respect to their peers and teachers", "The student has not shown respect to their peers and teachers", "The student has improved their respect to their peers and teachers"],
+    "attendance": ["The student has had good attendance", "The student has had poor attendance", "The student has improved their attendance"],
+    "punctuality": ["The student has been punctual", "The student has been late to class", "The student has improved their punctuality"],
+    "organisation": ["The student has been organised", "The student has been disorganised", "The student has improved their organisation"],
+    "effort": ["The student has put in a lot of effort", "The student has not put in a lot of effort", "The student has improved their effort"],
+    "behaviour": ["The student has had good behaviour", "The student has had poor behaviour", "The student has improved their behaviour"],
+    "performance": ["The student has performed well in class", "The student has not performed well in class", "The student has improved their performance in class"]
+}
+
 # Retrieve information about a given student in a class. Returns:
 # - A dictionary of old reports, with the key being the report ID and the value being a list of comments made in the report
 # - A list of percentages of marks the student has received in the class since the last report
