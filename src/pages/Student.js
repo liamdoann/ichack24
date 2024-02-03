@@ -1,25 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
 function Student() {
-  const navigate = useNavigate();
+  const { state } = useLocation();
 
-    const onLogout = (e) => { 
-        e.preventDefault();
-        console.log("hello");
-        navigate("/");
-    }
-
-    return (
-      <div className="Home">
-        <h2>Welcome!</h2>
-        <form>
-          <p>
-          <button onClick={onLogout}>Back</button>
-          </p>
-        </form>
+  return (
+      <div>
+          <h2>Student Details</h2>
+          <p>Name: {state.Name}</p>
+          <p>Age: {state.Age}</p>
+          <p>Occupation: {state.Occupation}</p>
       </div>
-    );
-  };
-  
-export default Home;
+  );
+}
+
+export default Student;

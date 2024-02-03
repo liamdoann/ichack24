@@ -31,8 +31,8 @@ function Home() {
     };
 
     const dummyData = [
-      { Name: 'John', Age: 30, Occupation: 'Engineer' },
-      { Name: 'Jane', Age: 28, Occupation: 'Doctor' },
+      { id: "j1", Name: 'John', Age: 30, Occupation: 'Engineer' },
+      { id: "j2", Name: 'Jane', Age: 28, Occupation: 'Doctor' },
   ];
 
     return (
