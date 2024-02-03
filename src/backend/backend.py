@@ -1,4 +1,5 @@
 import sqlite3
+import openai
 
 # Create a connection to the database
 def connect(dbID):
@@ -105,3 +106,43 @@ def addReport(request):
         cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
     conn.commit()
     conn.close()
+
+# Create a natural language prompt for the OpenAI API
+def create_prompt(report, comments):
+    pompt_start = f"""
+Here is the summary of a end-of-term report for a student in a class:
+
+Over the course of the term, the student recieved an average of {report[5]}% in the class.
+"""
+    for comment in comments:
+        prompt_start += "\n" + comment[0]
+
+    prompt_end = """
+
+Overall, the teacher feels that the student peformed {report[4]} out of 5 in the class.
+Use this summary to generate a natural language report for the student from the perspective of the teacher in appoximately 100 words.
+Do not include any specific numbers in the report."""
+
+    return prompt_start + prompt_end
+
+# Create a natural language report out of a report id
+def generateNLReport(reportId, school):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM reports WHERE rid = {reportId} ORDER BY date DESC LIMIT 1")
+    report = cursor.fetchone()
+    cursor.execute(f"SELECT comment FROM reportComment WHERE rid = {reportId}")
+    comments = cursor.fetchall()
+    conn.close()
+
+    openai.api_key = 'some_key'
+    prompt = create_prompt(report, comments)
+    reponse = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=500
+    )
+
+    generated_report = response['choices'][0]['text']
+
+    return generated_report
