@@ -73,15 +73,34 @@ reportCategories = {
     "performance": ["The student has performed well in class", "The student has not performed well in class", "The student has improved their performance in class"]
 }
 
+def generate_scores(category, reports):
+    score = 0
+    i = 5
+    improvements = []
+    for report in reports:
+        for comment in reports[report]:
+            if comment in reportCategories[category][0]:
+                score += max(i, 0) ** 2
+            elif comment in reportCategories[category][1]:
+                score -= max(i, 0) ** 2
+            elif comment in reportCategories[category][2]:
+                if i == 5:
+                    improvements.append(comment)
+                score += max(i, 0) ** 1.5
+    return int(score), improvements
+
 # Retrieve information about a given student in a class. Returns:
-# - A dictionary of old reports, with the key being the report ID and the value being a list of comments made in the report
+# - A list of what the student was told to improve on in the last report
 # - A list of percentages of marks the student has received in the class since the last report
 # - The average percentage of marks the student has received since the last report
 # - The difference between the average percentage of marks the student has received since the last report and the score of the last report
+# - A list of categories to suggest positive feedback in
+# - A list of categories to suggest negative feedback in
+# - A list of categories to suggest there was improvement in
 def getStudentInfo(studentId, classId, school):
     conn = connect(school)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT rid, date FROM reports WHERE sid = {studentId} AND cid = {classId}")
+    cursor.execute(f"SELECT rid, date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC")
     reports = cursor.fetchall()
     fullReports = {}
     for report in reports:
@@ -101,7 +120,30 @@ def getStudentInfo(studentId, classId, school):
     average = int(total / len(newMarks))
     avgDelta = average - mostRecentReport[5]
     conn.close()
-    return fullReports, percentages, average, avgDelta
+    improvementOrder = []
+    negativeOrder = []
+    positiveOrder = []
+    if avgDelta > 0:
+        improvementOrder = ["performance"]
+        positiveOrder = ["performance"]
+    elif avgDelta < 0:
+        negativeOrder = ["performance"]
+    else:
+        positiveOrder = ["performance"]
+    scores = {}
+    for category in reportCategories:
+        scores[category], lastImprovements = generate_scores(category, fullReports)
+    scores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
+    revScores = dict(sorted(scores.items(), key=lambda item: item[1]))
+    for category in scores:
+        if scores[category] not in positiveOrder:
+            improvementOrder.append(category)
+    for category in revScores:
+        if scores[category] not in negativeOrder:
+            improvementOrder.append(category)
+        if scores[category] not in improvementOrder:
+            improvementOrder.append(category)
+    return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder
 
 
 # Retrieve the information from the webpage and add a new report to the database
@@ -115,9 +157,24 @@ def addReport(request):
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO reports (sid, cid, date, score, average) VALUES ({studentId}, {classId}, date('now'), {score}, {average})")
     rid = cursor.lastrowid
-    comments = request.form['comments']
-    for comment in comments:
-        cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+    positiveComments = request.form['pComments']
+    negativeComments = request.form['nComments']
+    improvementComments = request.form['iComments']
+    for comment in positiveComments:
+        try:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][0]})")
+        except:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+    for comment in negativeComments:
+        try:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][1]})")
+        except:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+    for comment in improvementComments:
+        try:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][2]})")
+        except:
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
     conn.commit()
     conn.close()
 
@@ -151,7 +208,7 @@ def generateNLReport(reportId, school):
 
     openai.api_key = 'some_key'
     prompt = create_prompt(report, comments)
-    reponse = openai.Completion.create(
+    response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
         max_tokens=500
