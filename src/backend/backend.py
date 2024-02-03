@@ -167,19 +167,19 @@ def addReport(request):
     improvementComments = request.form['iComments']
     for comment in positiveComments:
         try:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][0]})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{reportCategories[comment][0]}')")
         except:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{comment}')")
     for comment in negativeComments:
         try:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][1]})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{reportCategories[comment][1]}')")
         except:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{comment}')")
     for comment in improvementComments:
         try:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {reportCategories[comment][2]})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{reportCategories[comment][2]}')")
         except:
-            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+            cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{comment}')")
     conn.commit()
     conn.close()
 
