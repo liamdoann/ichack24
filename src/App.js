@@ -8,7 +8,7 @@ function App() {
         msgs();
     }, []);
     const msgs = async () => {
-        const response = await fetch('/api/auth/login');
+        const response = await fetch('/auth/login');
         const data = await response.json();
         setMsg(data);
     }
@@ -20,9 +20,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        {msg.map((m, i) => (
-            <p key={i}>{m}</p>
-        ))}
+        {msg.message}
         <a
           className="App-link"
           href="https://reactjs.org"
