@@ -1,6 +1,11 @@
 import sqlite3
 import openai
 
+api_file = open("api_key", "r")
+api_key = api_file.readline()
+api_key.strip()
+api_file.close()
+
 # Create a connection to the database
 def connect(dbID):
     conn = sqlite3.connect(dbID + '.db')
@@ -206,7 +211,7 @@ def generateNLReport(reportId, school):
     comments = cursor.fetchall()
     conn.close()
 
-    openai.api_key = 'some_key'
+    openai.api_key = api_key
     prompt = create_prompt(report, comments)
     response = openai.Completion.create(
         engine="text-davinci-003",
