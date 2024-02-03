@@ -105,6 +105,7 @@ def generate_scores(category, reports):
 def getStudentInfo(studentId, classId, school):
     conn = connect(school)
     cursor = conn.cursor()
+
     cursor.execute(f"SELECT rid, date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC")
     reports = cursor.fetchall()
     fullReports = {}
