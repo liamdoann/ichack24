@@ -12,7 +12,7 @@ def connect(dbID):
     return conn
 
 
-# Reetrieve user credentials from the webpage
+# Reetrieve user credentials from the webpage - this is some flask shit idk someone else can do that
 def retrieveCredentials(request):
     username = request.form['username']
     password = request.form['password']
