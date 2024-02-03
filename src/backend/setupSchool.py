@@ -1,5 +1,6 @@
 import sqlite3
 import os
+from datetime import datetime
 
 # Create a school
 def createSchool(school):
@@ -66,6 +67,9 @@ while True:
         print("remove <school>: remove a school and its database")
         print("student <school> <name>: add a student to a school")
         print("class <school> <name> <teacher username>: add a class to a school")
+        print("entry <school> <class> <student>: add a student to a class")
+        print("task <school> <name>: add a task to a school")
+        print("mark <school> <class> <student> <task> <mark> <maxMark> <date> <comments>: add a mark to a student")
         print("list <school> <table>: list all the entries in a table")
         print("sqls <database> <sql>: execute sql on any database")
         print("sqlg <database> <sql>: execute sql on any database and print the result")
@@ -100,6 +104,67 @@ while True:
         conn.commit()
         conn.close()
         print(f"{command[2]} added to {command[1]}")
+    elif command[0].lower() == "entry":
+        conn = sqlite3.connect(f'{command[1]}.db')
+        cursor = conn.cursor()
+
+        # Get the student id
+        cursor.execute(f"SELECT sid FROM student WHERE name = '{command[3]}'")
+        sid = cursor.fetchone()
+        if sid is None:
+            print(f"Student {command[3]} does not exist")
+            conn.close()
+            continue
+
+        # Get the class id
+        cursor.execute(f"SELECT cid FROM classes WHERE name = '{command[2]}'")
+        cid = cursor.fetchone()
+        if cid is None:
+            print(f"Class {command[2]} does not exist")
+            conn.close()
+            continue
+        cursor.execute(f"INSERT INTO classEntry (sid, cid) VALUES ({sid[0]}, {cid[0]})")
+        conn.commit()
+        conn.close()
+        print(f"{command[3]} added to {command[2]}")
+    elif command[0].lower() == "task":
+        conn = sqlite3.connect(f'{command[1]}.db')
+        cursor = conn.cursor()
+        cursor.execute(f"INSERT INTO tasks (name) VALUES ('{command[2]}')")
+        conn.commit()
+        conn.close()
+        print(f"{command[2]} added to {command[1]}")
+    elif command[0].lower() == "mark":
+        conn = sqlite3.connect(f'{command[1]}.db')
+        cursor = conn.cursor()
+
+        # Get the student id
+        cursor.execute(f"SELECT sid FROM student WHERE name = '{command[3]}'")
+        sid = cursor.fetchone()
+        if sid is None:
+            print(f"Student {command[3]} does not exist")
+            conn.close()
+            continue
+
+        # Get the class id
+        cursor.execute(f"SELECT cid FROM classes WHERE name = '{command[2]}'")
+        cid = cursor.fetchone()
+        if cid is None:
+            print(f"Class {command[2]} does not exist")
+            conn.close()
+            continue
+
+        # Get the task id
+        cursor.execute(f"SELECT taskid FROM tasks WHERE name = '{command[4]}'")
+        taskid = cursor.fetchone()
+        if taskid is None:
+            print(f"Task {command[4]} does not exist")
+            conn.close()
+            continue
+        cursor.execute(f"INSERT INTO marks (sid, cid, taskid, mark, maxMark, date, comments) VALUES ({sid[0]}, {cid[0]}, {taskid[0]}, {command[5]}, {command[6]}, '{datetime.strptime(command[7], '%d/%m/%Y')}', '{command[8]}')")
+        conn.commit()
+        conn.close()
+        print(f"{command[3]} marked in {command[2]}")
     elif command[0].lower() == "list":
         conn = sqlite3.connect(f'{command[1]}.db')
         cursor = conn.cursor()
