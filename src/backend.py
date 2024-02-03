@@ -43,3 +43,33 @@ def retrieveTeacher(request):
     print("Classes: \n", results)
     conn.close()
     sendClasses(results)    # Send the classes to the webpage
+
+# Retrieve information about a given student in a class. Returns:
+# - A dictionary of old reports, with the key being the report ID and the value being a list of comments made in the report
+# - A list of percentages of marks the student has received in the class since the last report
+# - The average percentage of marks the student has received since the last report
+# - The difference between the average percentage of marks the student has received since the last report and the score of the last report
+def getStudentInfo(studentId, classId):
+    conn = connect('school')
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT rid, date FROM reports WHERE sid = {studentId} AND cid = {classId}")
+    reports = cursor.fetchall()
+    fullReports = {}
+    for report in reports:
+        cursor.execute(f"SELECT comment FROM reportComment WHERE rid = {report[0]}")
+        comments = cursor.fetchall()
+        fullReports[report[0]] = comments
+    cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
+                        (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
+    newMarks = cursor.fetchall()
+    cursor.execute(f"SELECT * FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
+    mostRecentReport = cursor.fetchone()
+    percentages = []
+    total = 0
+    for mark in newMarks:
+        percentages.append(mark[3] / mark[4])
+        total += mark[3] / mark[4]
+    average = int(total / len(newMarks))
+    avgDelta = average - mostRecentReport[5]
+    conn.close()
+    return fullReports, percentages, average, avgDelta
