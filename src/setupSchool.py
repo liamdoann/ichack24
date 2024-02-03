@@ -24,6 +24,9 @@ def createSchool(school):
     cursor.execute('CREATE TABLE marks (sid INTEGER NOT NULL, cid INTEGER NOT NULL, taskid INTEGER NOT NULL, mark INTEGER NOT NULL, date DATE NOT NULL, comments TEXT, FOREIGN KEY (sid) REFERENCES student(sid), FOREIGN KEY (cid) REFERENCES classes(cid), FOREIGN KEY (taskid) REFERENCES tasks(taskid))')
     cursor.execute('CREATE TABLE reports (rid INTEGER PRIMARY KEY, sid INTEGER NOT NULL, cid INTEGER NOT NULL, date DATE NOT NULL, INTEGER NOT NULL, FOREIGN KEY (sid) REFERENCES student(sid), FOREIGN KEY (cid) REFERENCES classes(cid))')
     cursor.execute('CREATE TABLE reportComment (rid INTEGER NOT NULL, comment TEXT NOT NULL, FOREIGN KEY (rid) REFERENCES reports(rid)')
+    conn.commit()
+    conn.close()
+    print("Setup Complete")
 
 # Add a teacher to a school
 def addTeacher(school, username, password):

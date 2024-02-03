@@ -19,8 +19,9 @@ def checkUserExists(username, password, conn):
     school = cursor.fetchone()
     return school
 
-def main(request):
+def retrieveTeacher(request):
     username, password = retrieveCredentials(request)
+    print(f"Requesting teacher: {username} with password: {password}")
     conn = connect('allTeachers')
     print(username, password)
     school = checkUserExists(username, password, conn)
@@ -33,3 +34,12 @@ def main(request):
     conn.close()
     conn = connect(school)
     print("Connected to school database")
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT tid FROM teachers WHERE username = {username}")
+    tid = cursor.fetchone()
+    print(f"Teacher ID: {tid}")
+    cursor.execute(f"SELECT cid, name FROM classes WHERE tid = {tid}")
+    results = cursor.fetchall()
+    print("Classes: \n", results)
+    conn.close()
+    sendClasses(results)    # Send the classes to the webpage
