@@ -44,13 +44,27 @@ def retrieveTeacher(request):
     conn.close()
     sendClasses(results)    # Send the classes to the webpage
 
+# Retrieve the students in a class since the last report
+def getStudentAverage(school, studentId, classId):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
+                        (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
+    marks = cursor.fetchall()
+    total = 0
+    for mark in marks:
+        total += mark[3] / mark[4]
+    average = int(total / len(marks))
+    conn.close()
+    return average
+
 # Retrieve information about a given student in a class. Returns:
 # - A dictionary of old reports, with the key being the report ID and the value being a list of comments made in the report
 # - A list of percentages of marks the student has received in the class since the last report
 # - The average percentage of marks the student has received since the last report
 # - The difference between the average percentage of marks the student has received since the last report and the score of the last report
-def getStudentInfo(studentId, classId):
-    conn = connect('school')
+def getStudentInfo(studentId, classId, school):
+    conn = connect(school)
     cursor = conn.cursor()
     cursor.execute(f"SELECT rid, date FROM reports WHERE sid = {studentId} AND cid = {classId}")
     reports = cursor.fetchall()
@@ -73,3 +87,21 @@ def getStudentInfo(studentId, classId):
     avgDelta = average - mostRecentReport[5]
     conn.close()
     return fullReports, percentages, average, avgDelta
+
+
+# Retrieve the information from the webpage and add a new report to the database
+def addReport(request):
+    studentId = request.form['studentId']
+    classId = request.form['classId']
+    score = request.form['score']
+    school = request.form['school']
+    average = getStudentAverage(school, studentId, classId)
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"INSERT INTO reports (sid, cid, date, score, average) VALUES ({studentId}, {classId}, date('now'), {score}, {average})")
+    rid = cursor.lastrowid
+    comments = request.form['comments']
+    for comment in comments:
+        cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, {comment})")
+    conn.commit()
+    conn.close()
