@@ -25,6 +25,16 @@ def checkUserExists(username, password, conn):
     school = cursor.fetchone()
     return school
 
+# Send the classes to the webpage
+def sendClasses(classes):
+    # TODO()
+    pass
+
+# Send an error to the webpage if the credentials are incorrect
+def credentialError():
+    # TODO()
+    pass
+
 def retrieveTeacher(request):
     username, password = retrieveCredentials(request)
     print(f"Requesting teacher: {username} with password: {password}")
@@ -54,8 +64,12 @@ def retrieveTeacher(request):
 def getStudentAverage(school, studentId, classId):
     conn = connect(school)
     cursor = conn.cursor()
-    cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
-                        (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
+    cursor.execute(f"SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
+    if cursor.fetchone() is None:
+        cursor.execute(f"SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId}")
+    else:
+        cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
+                            (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
     marks = cursor.fetchall()
     total = 0
     for mark in marks:
@@ -113,8 +127,12 @@ def getStudentInfo(studentId, classId, school):
         cursor.execute(f"SELECT comment FROM reportComment WHERE rid = {report[0]}")
         comments = cursor.fetchall()
         fullReports[report[0]] = comments
-    cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
-                        (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
+    cursor.execute(f"SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
+    if cursor.fetchone() is None:
+        cursor.execute(f"SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId}")
+    else:
+        cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
+                            (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
     newMarks = cursor.fetchall()
     cursor.execute(f"SELECT * FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
     mostRecentReport = cursor.fetchone()
@@ -124,7 +142,10 @@ def getStudentInfo(studentId, classId, school):
         percentages.append(mark[3] / mark[4])
         total += mark[3] / mark[4]
     average = int(total / len(newMarks))
-    avgDelta = average - mostRecentReport[5]
+    if mostRecentReport is None:
+        avgDelta = 0
+    else:
+        avgDelta = average - mostRecentReport[5]
     conn.close()
     improvementOrder = []
     negativeOrder = []
@@ -194,7 +215,7 @@ Over the course of the term, the student recieved an average of {report[5]}% in 
     for comment in comments:
         prompt_start += "\n" + comment[0]
 
-    prompt_end = """
+    prompt_end = f"""
 
 Overall, the teacher feels that the student peformed {report[4]} out of 5 in the class.
 Use this summary to generate a natural language report for the student from the perspective of the teacher in appoximately 100 words.
