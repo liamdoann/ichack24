@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 function Report() {
 
+    const navigate = useNavigate();
+
     const location = useLocation();
     const state = location.state ? location.state : null;
     const username = state ? state.username : null;
@@ -10,12 +12,22 @@ function Report() {
     const school = state ? state.school : null;
     const report = state ? state.report : null;
 
-    // show report on page
-    // call ' navigate("/home", { state: { username : username, classes: classes, school: school } }); '
-    // after pressing return button
+
+    const onReturn = (e) => {
+        e.preventDefault();
+        navigate("/home", { state: { username : username, classes: classes, school: school } });
+    }
 
   return (
-      <div>{report}</div>
+    <div className="Report">
+        {report}
+        <br></br>
+        <form onSubmit={onReturn}>
+            <p>
+                <button type="submit">back</button>
+            </p>
+        </form>
+    </div>
   );
 }
 
