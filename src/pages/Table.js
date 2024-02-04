@@ -8,7 +8,8 @@ function DataTable({ data, school, className}) {
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
   const handleRowClick = (rowData) => {
-    navigate(`/student/${rowData.id}`, { state: {name: rowData, school: school, className: className} });
+    console.log(rowData)
+    navigate(`/student/`, { state: {name: rowData.Name, school: school, className: className} });
 };
 
   return (

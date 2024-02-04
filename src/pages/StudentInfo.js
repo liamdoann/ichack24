@@ -1,4 +1,5 @@
-import React, { useState, useLocation } from 'react';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Info from './Info';
 
 function StudentInfo() {
