@@ -21,6 +21,7 @@ function Student() {
     const [positiveOrder, setPositiveOrder] = useState([]);
     const [negativeOrder, setNegativeOrder] = useState([]);
     const [improvementOrder, setImprovementOrder] = useState([]);
+    const [classAverage, setClassAverage] = useState(0);
 
     useEffect(() => {
     const fetchStudentData = async () => {
@@ -41,7 +42,8 @@ function Student() {
             setAvgDelta(data.avgDelta);
             setPositiveOrder(data.positiveOrder);
             setNegativeOrder(data.negativeOrder);
-            setImprovementOrder(data.improvementOrder);   
+            setImprovementOrder(data.improvementOrder);  
+            setClassAverage(data.classAverage); 
         }
     } 
         fetchStudentData();
@@ -56,6 +58,7 @@ function Student() {
       <div className="content-below">
         <div className="inner-content">
           <h2>Student Details</h2>
+          <p style={{fontSize: '20pt'}}>Class: {className} | Average: {classAverage}</p>
           <p style={{fontSize: '20pt'}}>Name: {name}<br/>Average: {average}<br/>Average Change: {avgDelta}</p>
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
         </div>
