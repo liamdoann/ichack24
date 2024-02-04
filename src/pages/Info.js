@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-function Info({ title, text, setText, items, setItems }) {
+function Info({ title, text, setText, items, setItems, quotes }) {
   // Prepopulated set of quotes
-  const quotes = ['Quote 1', 'Quote 2', 'Quote 3'];
+  //const quotes = ['Quote 1', 'Quote 2', 'Quote 3'];
 
   const handleSubmit = (e) => {
     e.preventDefault();

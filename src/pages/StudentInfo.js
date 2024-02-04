@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Info from './Info';
 
-function StudentInfo() {
+function StudentInfo({ posOrder, negOrder, imOrder}) {
   const { state } = useLocation();
 
   const [im, setIm] = useState('');
@@ -20,9 +20,9 @@ function StudentInfo() {
 
   return (
     <div>
-      <Info title={"Improvements"} text={im} setText={setIm} items={itIm} setItems={setItIm} />
-      <Info title={"Positives"} text={pos} setText={setPos} items={posIm} setItems={setPosIm} />
-      <Info title={"Negatives"} text={neg} setText={setNeg} items={negIm} setItems={setNegIm} />
+      <Info title={"Improvements"} text={im} setText={setIm} items={itIm} setItems={setItIm} quotes={imOrder} />
+      <Info title={"Positives"} text={pos} setText={setPos} items={posIm} setItems={setPosIm} quotes={posOrder} />
+      <Info title={"Negatives"} text={neg} setText={setNeg} items={negIm} setItems={setNegIm} quotes={negOrder} />
 
       <button onClick={handleClick}>Display Text</button>
       <p>{displayText}</p>

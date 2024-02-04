@@ -72,10 +72,10 @@ function Student() {
       <div>
           <h2>Student Details</h2>
           <p>Name: {name}</p>
-          <p>Age: {school}</p>
-          <p>Occupation: {className}</p>
+          <p>Average: {average}</p>
+          <p>Average Change: {avgDelta}</p>
 
-          <StudentInfo/>
+          <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} />
       </div>
   );
 }
