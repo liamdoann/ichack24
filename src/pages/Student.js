@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StudentInfo from './StudentInfo';
 
@@ -21,6 +21,7 @@ function Student() {
     const [negativeOrder, setNegativeOrder] = useState([]);
     const [improvementOrder, setImprovementOrder] = useState([]);
 
+    useEffect(() => {
     const fetchStudentData = async () => {
         const response = await fetch('/api/find-student', {
           method: 'POST',
@@ -42,6 +43,8 @@ function Student() {
             setImprovementOrder(data.improvementOrder);   
         }
     } 
+        fetchStudentData();
+    }, []);
 
     // upon submit: call submit-report, and then pass the report, alongside username and classes to the report page
     const handleSubmit = async (e) => {
@@ -68,9 +71,9 @@ function Student() {
   return (
       <div>
           <h2>Student Details</h2>
-          <p>Name: {state.Name}</p>
-          <p>Age: {state.Age}</p>
-          <p>Occupation: {state.Occupation}</p>
+          <p>Name: {name}</p>
+          <p>Age: {school}</p>
+          <p>Occupation: {className}</p>
 
           <StudentInfo/>
       </div>

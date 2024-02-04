@@ -39,7 +39,7 @@ function Home() {
 
     return (
       <div className="Home">
-        <div className="flexHeader"><h2>My Dashboard</h2> <form>
+        <div className="flexHeader"><h2>Hello, (username)!</h2> <form>
           <button onClick={onLogout} style={{width: '60px'}}>Logout</button>
         </form></div>
         

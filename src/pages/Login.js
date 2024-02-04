@@ -38,12 +38,13 @@ function Login() {
             
             <form onSubmit={handleSubmit}>
                 <p>
-                    <h4>Please login to continue</h4>
+                    <h4 style={{marginBottom: '10px'}}>Please login to continue</h4>
                     <input type="text" name="username" placeholder="username" required/>
                     <input type="password" name="password" placeholder="password" required/>
+                    <button type="submit" style={{marginTop: '15px'}}>Login</button>
                 </p>
                 <p>
-                    <button type="submit">Login</button>
+                    
                 </p>
             </form>
             </div>
