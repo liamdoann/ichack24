@@ -2,6 +2,8 @@ import sqlite3
 import os
 from datetime import datetime
 
+import setupSystem
+
 # Create a school
 def createSchool(school):
     conn = sqlite3.connect('allTeachers.db')
@@ -224,34 +226,44 @@ def makeExample():
 
     removeSchool("example")
     createSchool("example")
-    addTeacher("example", "teacher1", "password")
-    addStudent("example", "student1")
-    addStudent("example", "student2")
-    addStudent("example", "student3")
-    addClass("example", "maths", "teacher1")
-    addClass("example", "english", "teacher1")
-    addEntry("example", "maths", "student1")
-    addEntry("example", "maths", "student2")
-    addEntry("example", "maths", "student3")
+    addTeacher("example", "Jiawen", "password")
+    addStudent("example", "Theo")
+    addStudent("example", "Liam")
+    addStudent("example", "Ruiqi")
+    addStudent("example", "Sam")
+    addStudent("example", "Rahul")
+    addClass("example", "maths", "Jiawen")
+    addClass("example", "english", "Jiawen")
+    addEntry("example", "maths", "Theo")
+    addEntry("example", "maths", "Liam")
+    addEntry("example", "maths", "Ruiqi")
+    addEntry("example", "maths", "Rahul")
+    addEntry("example", "english", "Liam")
+    addEntry("example", "english", "Sam")
     addTask("example", "maths_hw1")
     addTask("example", "maths_hw2")
     addTask("example", "maths_hw3")
     addTask("example", "maths_hw4")
-    addMark("example", "maths", "student1", "maths_hw1", 10, 10, "01/01/2020", "Good")
-    addMark("example", "maths", "student2", "maths_hw1", 5, 10, "01/01/2020", "Bad")
-    addMark("example", "maths", "student3", "maths_hw1", 5, 10, "01/01/2020", "Bad")
-    addMark("example", "maths", "student1", "maths_hw2", 9, 10, "01/02/2020", "Good")
-    addMark("example", "maths", "student2", "maths_hw2", 3, 10, "01/02/2020", "Bad")
-    addMark("example", "maths", "student3", "maths_hw2", 4, 10, "01/02/2020", "Bad")
-    addMark("example", "maths", "student1", "maths_hw3", 10, 10, "01/01/2021", "Good")
-    addMark("example", "maths", "student2", "maths_hw3", 3, 10, "01/01/2021", "Bad")
-    addMark("example", "maths", "student3", "maths_hw3", 8, 10, "01/01/2021", "Good")
-    addMark("example", "maths", "student1", "maths_hw4", 8, 10, "01/01/2021", "Good")
-    addMark("example", "maths", "student2", "maths_hw4", 1, 10, "01/01/2021", "Bad")
-    addMark("example", "maths", "student3", "maths_hw4", 9, 10, "01/01/2021", "Good")
-    addReport("example", "student1", "maths", "01/12/2020", 5, 90, [rcs["performance"][0], rcs["attendance"][1], rcs["organisation"][2], rcs["respect"][2]])
-    addReport("example", "student2", "maths", "01/12/2020", 2, 40, [rcs["performance"][1], rcs["attendance"][1], rcs["homework"][1], rcs["punctuality"][2]])
-    addReport("example", "student3", "maths", "01/12/2020", 1, 40, [rcs["performance"][1], rcs["attendance"][2], rcs["homework"][1], rcs["punctuality"][0]])
+    addMark("example", "maths", "Theo", "maths_hw1", 10, 10, "01/01/2020", "Good")
+    addMark("example", "maths", "Liam", "maths_hw1", 5, 10, "01/01/2020", "Bad")
+    addMark("example", "maths", "Ruiqi", "maths_hw1", 5, 10, "01/01/2020", "Bad")
+    addMark("example", "maths", "Rahul", "maths_hw1", 7, 10, "01/02/2020", "Good")
+    addMark("example", "maths", "Theo", "maths_hw2", 9, 10, "01/02/2020", "Good")
+    addMark("example", "maths", "Liam", "maths_hw2", 3, 10, "01/02/2020", "Bad")
+    addMark("example", "maths", "Ruiqi", "maths_hw2", 4, 10, "01/02/2020", "Bad")
+    addMark("example", "maths", "Rahul", "maths_hw2", 7, 10, "01/02/2020", "Good")
+    addMark("example", "maths", "Theo", "maths_hw3", 10, 10, "01/01/2021", "Good")
+    addMark("example", "maths", "Liam", "maths_hw3", 3, 10, "01/01/2021", "Bad")
+    addMark("example", "maths", "Ruiqi", "maths_hw3", 8, 10, "01/01/2021", "Good")
+    addMark("example", "maths", "Rahul", "maths_hw3", 9, 10, "01/01/2021", "Good")
+    addMark("example", "maths", "Theo", "maths_hw4", 8, 10, "01/01/2021", "Good")
+    addMark("example", "maths", "Liam", "maths_hw4", 1, 10, "01/01/2021", "Bad")
+    addMark("example", "maths", "Ruiqi", "maths_hw4", 9, 10, "01/01/2021", "Good")
+    addMark("example", "maths", "Rahul", "maths_hw4", 10, 10, "01/01/2021", "Good")
+    addReport("example", "Theo", "maths", "01/12/2020", 5, 90, [rcs["performance"][0], rcs["attendance"][1], rcs["organisation"][2], rcs["respect"][2]])
+    addReport("example", "Liam", "maths", "01/12/2020", 2, 40, [rcs["performance"][1], rcs["attendance"][1], rcs["homework"][1], rcs["punctuality"][2]])
+    addReport("example", "Ruiqi", "maths", "01/12/2020", 1, 40, [rcs["performance"][1], rcs["attendance"][2], rcs["homework"][1], rcs["punctuality"][0]])
+    addReport("example", "Rahul", "maths", "01/12/2020", 5, 90, [rcs["performance"][2], rcs["attendance"][0], rcs["organisation"][2], rcs["respect"][2], rcs["effort"][1]])
     print("Example school created")
 
 
@@ -305,6 +317,9 @@ while True:
     elif command[0].lower() == "remove":
         removeSchool(command[1])
     elif command[0].lower() == "example":
+        makeExample()
+    elif command[0].lower() == "reset":
+        setupSystem.setup()
         makeExample()
     else:
         print("Invalid command. Try again or type 'q' to quit.")

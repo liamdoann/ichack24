@@ -198,8 +198,8 @@ def getStudentInfo(studentName, className, school):
     for category in reportCategories:
         scores[category], li = generate_scores(category, fullReports)
         lastImprovements += li
-    scores = dict(sorted(scores.items(), key=lambda item: item[1]))
-    revScores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
+    scores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
+    revScores = dict(sorted(scores.items(), key=lambda item: item[1]))
     for category in scores:
         if category not in positiveOrder:
             positiveOrder.append(category)
