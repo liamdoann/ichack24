@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import eduPlanner from './eduplanner.png';
 
 function Login() {
     const navigate = useNavigate();
@@ -12,9 +13,8 @@ function Login() {
 
     return (
       <div className="Login">
-        <h1>
-          EduPlanner
-        </h1>
+        <div id="rcorners2">
+        <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '300px' }}/>
             <h4>Sign in to use</h4>
             <form onSubmit={handleSubmit}>
                 <p>
@@ -30,6 +30,7 @@ function Login() {
                     <button type="submit">Login</button>
                 </p>
             </form>
+            </div>
         </div>
     );
   }
