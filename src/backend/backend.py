@@ -172,6 +172,14 @@ def getStudentInfo(studentId, classId, school):
             improvementOrder.append(category)
     return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder
 
+# Retrieve all the students in a class
+def getStudents(classId, school):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT name FROM student JOIN classEntry ON student.sid = classEntry.sid WHERE cid = {classId}")
+    students = cursor.fetchall()
+    conn.close()
+    return students
 
 # Retrieve the information from the webpage and add a new report to the database
 def addReport(request):
@@ -244,5 +252,4 @@ def generateNLReport(reportId, school):
     )
 
     return chat_completion.choices[0].message.content
-
 
