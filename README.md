@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Setting up the database
+
+### Initial Setup
+
+In order to setup the example database, navigate to the src/backend folder.
+From the folder, run `python3 setupSystem` to initialise the system
+You can then run `python3 setupSchool` to be provided with the database management cli
+
+### Example setup
+
+In order to create an example test school populated with sample data:
+Run `python3 setupSchool` to open the cli, then
+enter `example` to build your sample database
