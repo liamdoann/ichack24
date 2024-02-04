@@ -1,8 +1,9 @@
-import React from 'react';
+import { React, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StudentInfo from './StudentInfo';
 
 function Student() {
+    const navigate = useNavigate();
 
     const location = useLocation();
     const state = location.state ? location.state : null;
@@ -20,7 +21,7 @@ function Student() {
     const [negativeOrder, setNegativeOrder] = useState([]);
     const [improvementOrder, setImprovementOrder] = useState([]);
 
-    const data = async () => {
+    const fetchStudentData = async () => {
         const response = await fetch('/api/find-student', {
           method: 'POST',
           headers: {
@@ -43,6 +44,26 @@ function Student() {
     } 
 
     // upon submit: call submit-report, and then pass the report, alongside username and classes to the report page
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(e.target);
+        const report = data.get('report');
+
+        const response = await fetch('/api/submit-report', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ student: name, className: className, score: data.get('score'), school: school, positiveComments: data.get('positiveComments'), negativeComments: data.get('negativeComments'), improvementComments: data.get('improvementComments')}),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+            navigate("/report", { state: { username : username, classes: classes, school: school, report: report } });
+        }
+    }
 
   return (
       <div>

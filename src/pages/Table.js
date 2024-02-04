@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 // npm install @coreui/react-chartjs
 
-function DataTable({ data, school, className}) {
+function DataTable({ data, school, className, username, classes }) {
   const navigate = useNavigate();
   const headers = data.length > 0 ? Object.keys(data[0]) : [];
 
   const handleRowClick = (rowData) => {
-    navigate(`/student/${rowData.id}`, { state: {name: rowData, school: school, className: className, username: username, classes: classes} });
+    navigate(`/student/${rowData.id}`, { state: {name: rowData.id, school: school, className: className, username: username, classes: classes} });
 };
 
   return (
