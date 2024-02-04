@@ -33,3 +33,16 @@ def find_student():
     school = data.get('school')
     lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder = getStudentInfo(studentName, className, school)
     return jsonify({'lastImprovements': lastImprovements, 'percentages': percentages, 'average': average, 'avgDelta': avgDelta, 'positiveOrder': positiveOrder, 'negativeOrder': negativeOrder, 'improvementOrder': improvementOrder})
+
+@app.route('/submit-report', methods=['POST'])
+def submit_report():
+    data = request.get_json()
+    studentName = data.get('student')
+    className = data.get('class')
+    school = data.get('school')
+    score = data.get('score')
+    positiveComments = data.get('positive')
+    negativeComments = data.get('negative')
+    improvementComments = data.get('improvement')
+    report = addReport(studentName, className, score, school, positiveComments, negativeComments, improvementComments)
+    return jsonify({'report': report})
