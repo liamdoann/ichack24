@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom"
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Student from './pages/Student';
+import Report from './pages/Report';
 import PerformanceGraph from './pages/Graph';
 import { LineChart } from '@mui/x-charts';
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={ <Login/> }/>
           <Route path="/home" element={ <Home/> }/>
           <Route path="/student/" element={ <Student/> }/>
+          <Route path="/report" element={ <Report/> }/>
         </Routes>
     </div>
   );

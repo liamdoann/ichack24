@@ -47,26 +47,7 @@ function Student() {
     }, []);
 
     // upon submit: call submit-report, and then pass the report, alongside username and classes to the report page
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const data = new FormData(e.target);
-        const report = data.get('report');
-
-        const response = await fetch('/api/submit-report', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ student: name, className: className, score: data.get('score'), school: school, positiveComments: data.get('positiveComments'), negativeComments: data.get('negativeComments'), improvementComments: data.get('improvementComments')}),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            navigate("/report", { state: { username : username, classes: classes, school: school, report: report } });
-        }
-    }
+    
 
   return (
       <div>
@@ -75,7 +56,7 @@ function Student() {
           <p>Average: {average}</p>
           <p>Average Change: {avgDelta}</p>
 
-          <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} />
+          <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
       </div>
   );
 }

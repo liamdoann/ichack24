@@ -106,7 +106,6 @@ def generate_scores(category, reports):
     i = 5
     improvements = []
     for report in reports:
-        print(reports[report])
         if reportCategories[category][0] in reports[report]:
             score += max(i, 0) ** 2
         if reportCategories[category][1] in reports[report]:
@@ -116,8 +115,6 @@ def generate_scores(category, reports):
             if i == 5:
                 improvements.append(category)
         i += 1
-    print(category, score)
-    print(improvements)
     return int(score), improvements
 
 # Retrieve information about a given student in a class. Returns:
@@ -204,6 +201,8 @@ def getStudents(className, school):
 
 # Retrieve the information from the webpage and add a new report to the database
 def addReport(studentName, className, score, school, positiveComments, negativeComments, improvementComments):
+    print(f"student: {studentName}, class: {className}, school: {school}, score: {score}")
+    print(f"positive: {positiveComments}, negative: {negativeComments}, improvement: {improvementComments}")
     studentId = getStudentId(school, studentName)
     classId = getClassId(school, className)
     average = getStudentAverage(school, studentId, classId)
