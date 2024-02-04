@@ -137,14 +137,14 @@ function Home() {
             </p>}
           {selectedClass && 
             <div>
-                <h4>Generate Classroom Seating Plan:</h4>
+                <h2 style={{marginBlockStart:'30pt'}}>Generate Classroom Seating Plan</h2>
                 <form onSubmit={handleSubmit}>
                 <p>
-                    <h5 style={{marginBottom: '10px'}}> Enter coordinates corresponding to your classroom layout (format: (x1,y1);(x2,y2);...). </h5>
+                    <h3 style={{marginBottom: '10px'}}>Enter coordinates corresponding to your classroom layout (format: (x1,y1);(x2,y2);...). </h3>
                     <input type="desks" name="desks" placeholder=""/>
-                    <h5 style={{marginBottom: '10px'}}> Enter students you would like to seat in the front row (format: A;B;C;...). </h5>
+                    <h3 style={{marginBottom: '10px'}}> Enter students you would like to seat in the front row (format: A;B;C;...). </h3>
                     <input type="at_front" name="at_front" placeholder=""/>
-                    <h5 style={{marginBottom: '10px'}}>Enter pairs of students you would like to seat apart from each other (format: (A,B);(C,D);...):</h5>
+                    <h3 style={{marginBottom: '10px'}}>Enter pairs of students you would like to seat apart from each other (format: (A,B); (C,D);...):</h3>
                     <input type="keep_separate" name="keep_separate" placeholder=""/>
                     <br></br>
                     <button type="submit" style={{marginTop: '15px'}}>Submit</button>

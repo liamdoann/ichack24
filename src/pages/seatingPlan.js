@@ -42,7 +42,7 @@ function SeatingPlan({ seatingPlanData }) {
             ))}
         </div>
         </div>
-        <h3>Front</h3>
+        <h3 style={{alignContent: 'center'}}>Front</h3>
         </div>
     );
 };
