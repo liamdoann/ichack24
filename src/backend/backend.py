@@ -93,20 +93,31 @@ reportCategories = {
     "performance": ["The student has performed well in class", "The student has not performed well in class", "The student has improved their performance in class"]
 }
 
+def getClassId(school, className):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT cid FROM classes WHERE name = '{className}'")
+    classId = cursor.fetchone()[0]
+    conn.close()
+    return classId
+
 def generate_scores(category, reports):
     score = 0
     i = 5
     improvements = []
     for report in reports:
-        for comment in reports[report]:
-            if comment in reportCategories[category][0]:
-                score += max(i, 0) ** 2
-            elif comment in reportCategories[category][1]:
-                score -= max(i, 0) ** 2
-            elif comment in reportCategories[category][2]:
-                if i == 5:
-                    improvements.append(comment)
-                score += max(i, 0) ** 1.5
+        print(reports[report])
+        if reportCategories[category][0] in reports[report]:
+            score += max(i, 0) ** 2
+        if reportCategories[category][1] in reports[report]:
+            score -= max(i, 0) ** 2
+        if reportCategories[category][2] in reports[report]:
+            score += max(i, 0) ** 1.5
+            if i == 5:
+                improvements.append(category)
+        i += 1
+    print(category, score)
+    print(improvements)
     return int(score), improvements
 
 # Retrieve information about a given student in a class. Returns:
@@ -117,7 +128,11 @@ def generate_scores(category, reports):
 # - A list of categories to suggest positive feedback in
 # - A list of categories to suggest negative feedback in
 # - A list of categories to suggest there was improvement in
-def getStudentInfo(studentId, classId, school):
+def getStudentInfo(studentName, className, school):
+
+    studentId = getStudentId(school, studentName)
+    classId = getClassId(school, className)
+
     conn = connect(school)
     cursor = conn.cursor()
 
@@ -127,7 +142,7 @@ def getStudentInfo(studentId, classId, school):
     for report in reports:
         cursor.execute(f"SELECT comment FROM reportComment WHERE rid = {report[0]}")
         comments = cursor.fetchall()
-        fullReports[report[0]] = comments
+        fullReports[report[0]] = [comment[0] for comment in comments]
     cursor.execute(f"SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
     if cursor.fetchone() is None:
         cursor.execute(f"SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId}")
@@ -140,8 +155,8 @@ def getStudentInfo(studentId, classId, school):
     percentages = []
     total = 0
     for mark in newMarks:
-        percentages.append(mark[3] / mark[4])
-        total += mark[3] / mark[4]
+        percentages.append((mark[3] / mark[4]) * 100)
+        total += (mark[3] / mark[4]) * 100
     average = int(total / len(newMarks))
     if mostRecentReport is None:
         avgDelta = 0
@@ -159,17 +174,19 @@ def getStudentInfo(studentId, classId, school):
     else:
         positiveOrder = ["performance"]
     scores = {}
+    lastImprovements = []
     for category in reportCategories:
-        scores[category], lastImprovements = generate_scores(category, fullReports)
+        scores[category], li = generate_scores(category, fullReports)
+        lastImprovements += li
     scores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
     revScores = dict(sorted(scores.items(), key=lambda item: item[1]))
     for category in scores:
-        if scores[category] not in positiveOrder:
-            improvementOrder.append(category)
+        if category not in positiveOrder:
+            positiveOrder.append(category)
     for category in revScores:
-        if scores[category] not in negativeOrder:
-            improvementOrder.append(category)
-        if scores[category] not in improvementOrder:
+        if category not in negativeOrder:
+            negativeOrder.append(category)
+        if category not in improvementOrder:
             improvementOrder.append(category)
     return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder
 
@@ -274,4 +291,3 @@ def getTeacherId(school, teacherName):
     teacherId = cursor.fetchone()
     conn.close()
     return teacherId[0]
-

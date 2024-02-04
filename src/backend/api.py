@@ -24,3 +24,12 @@ def get_students():
     students = getStudents(className, school)
 
     return jsonify({'students': [{'Name': name} for name in students]})
+
+@app.route('/find-student', methods=['POST'])
+def find_student():
+    data = request.get_json()
+    studentName = data.get('student')
+    className = data.get('class')
+    school = data.get('school')
+    lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder = getStudentInfo(studentName, className, school)
+    return jsonify({'lastImprovements': lastImprovements, 'percentages': percentages, 'average': average, 'avgDelta': avgDelta, 'positiveOrder': positiveOrder, 'negativeOrder': negativeOrder, 'improvementOrder': improvementOrder})

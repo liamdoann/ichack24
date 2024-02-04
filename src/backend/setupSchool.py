@@ -249,9 +249,9 @@ def makeExample():
     addMark("example", "maths", "student1", "maths_hw4", 8, 10, "01/01/2021", "Good")
     addMark("example", "maths", "student2", "maths_hw4", 1, 10, "01/01/2021", "Bad")
     addMark("example", "maths", "student3", "maths_hw4", 9, 10, "01/01/2021", "Good")
-    addReport("example", "student1", "maths", "01/12/2020", 5, 9, [rcs["performance"][0], rcs["attendance"][1], rcs["organisation"][2], rcs["respect"][2]])
-    addReport("example", "student2", "maths", "01/12/2020", 2, 4, [rcs["performance"][1], rcs["attendance"][1], rcs["homework"][1], rcs["punctuality"][2]])
-    addReport("example", "student3", "maths", "01/12/2020", 1, 4, [rcs["performance"][1], rcs["attendance"][2], rcs["homework"][1], rcs["punctuality"][0]])
+    addReport("example", "student1", "maths", "01/12/2020", 5, 90, [rcs["performance"][0], rcs["attendance"][1], rcs["organisation"][2], rcs["respect"][2]])
+    addReport("example", "student2", "maths", "01/12/2020", 2, 40, [rcs["performance"][1], rcs["attendance"][1], rcs["homework"][1], rcs["punctuality"][2]])
+    addReport("example", "student3", "maths", "01/12/2020", 1, 40, [rcs["performance"][1], rcs["attendance"][2], rcs["homework"][1], rcs["punctuality"][0]])
     print("Example school created")
 
 
