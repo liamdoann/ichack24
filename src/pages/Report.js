@@ -14,6 +14,9 @@ function Report() {
 
 
     const onReturn = (e) => {
+        console.log(username);
+        console.log(classes);
+        console.log(school);
         e.preventDefault();
         navigate("/home", { state: { username : username, classes: classes, school: school } });
     }

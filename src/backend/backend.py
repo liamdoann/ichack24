@@ -75,7 +75,10 @@ def getStudentAverage(school, studentId, classId):
     total = 0
     for mark in marks:
         total += mark[3] / mark[4]
-    average = int(total / len(marks))
+    if len(marks) == 0:
+        average = 0
+    else:
+        average = int(total / len(marks))
     conn.close()
     return average
 
@@ -154,7 +157,10 @@ def getStudentInfo(studentName, className, school):
     for mark in newMarks:
         percentages.append((mark[3] / mark[4]) * 100)
         total += (mark[3] / mark[4]) * 100
-    average = int(total / len(newMarks))
+    if len(newMarks) == 0:
+        average = 0
+    else:
+        average = int(total / len(newMarks))
     if mostRecentReport is None:
         avgDelta = 0
     else:
