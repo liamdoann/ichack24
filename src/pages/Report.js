@@ -27,7 +27,7 @@ function Report() {
         <TopBar />
         <div class="content-below">
             <div className="inner-content">
-                <div className="Report" style={{width:'600pt'}}>
+                <div className="Report">
                     {report}
                     <br></br>
                     <form onSubmit={onReturn}>
