@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StudentInfo from './StudentInfo';
 import TopBar from './TopBar';
-import StudentRow from './StudentRow';
 
 function Student() {
     const navigate = useNavigate();
@@ -22,6 +21,7 @@ function Student() {
     const [positiveOrder, setPositiveOrder] = useState([]);
     const [negativeOrder, setNegativeOrder] = useState([]);
     const [improvementOrder, setImprovementOrder] = useState([]);
+    const [classAverage, setClassAverage] = useState(0);
 
     useEffect(() => {
     const fetchStudentData = async () => {
@@ -42,7 +42,8 @@ function Student() {
             setAvgDelta(data.avgDelta);
             setPositiveOrder(data.positiveOrder);
             setNegativeOrder(data.negativeOrder);
-            setImprovementOrder(data.improvementOrder);   
+            setImprovementOrder(data.improvementOrder);  
+            setClassAverage(data.classAverage); 
         }
     } 
         fetchStudentData();
@@ -56,8 +57,23 @@ function Student() {
     <TopBar />
       <div className="content-below">
         <div className="inner-content">
-          <h2>Student Details</h2>
-          <StudentRow name={name} averageMark={average} averageChange={avgDelta}/>
+          <div>
+            <div style={{display:'flex', flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between'}}>
+                <p style={{fontSize: '20pt', fontWeight: 'bold'}}>{name}</p><p style={{fontSize: '20pt'}}>{className}</p>
+            </div>
+
+            <p style={{fontSize: '10pt'}}>{name} got an average of {average}, compared to the class average of {classAverage}!</p>
+            <p style={{fontSize: '10pt'}}>
+                The average has changed by{' '}
+                <strong style={{color: avgDelta > 0 ? 'green' : avgDelta < 0 ? 'red' : 'black'}}>
+                    {avgDelta > 0 && '↑'}
+                    {avgDelta < 0 && '↓'}
+                    {Math.abs(avgDelta)}
+                </strong> 
+                {' '}since last time.
+            </p>    
+          </div>
+
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
         </div>
       </div>

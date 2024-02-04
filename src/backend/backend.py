@@ -146,10 +146,16 @@ def getStudentInfo(studentName, className, school):
     cursor.execute(f"SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
     if cursor.fetchone() is None:
         cursor.execute(f"SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId}")
+        newMarks = cursor.fetchall()
+        cursor.execute(f"SELECT * FROM marks WHERE cid = {classId}")
+        allMarks = cursor.fetchall()
     else:
         cursor.execute(f"""SELECT * FROM marks WHERE sid = {studentId} AND cid = {classId} AND date > 
                             (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
-    newMarks = cursor.fetchall()
+        newMarks = cursor.fetchall()
+        cursor.execute(f"""SELECT * FROM marks WHERE cid = {classId} AND date > 
+                            (SELECT date FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1)""")
+        allMarks = cursor.fetchall()
     cursor.execute(f"SELECT * FROM reports WHERE sid = {studentId} AND cid = {classId} ORDER BY date DESC LIMIT 1")
     mostRecentReport = cursor.fetchone()
     percentages = []
@@ -165,6 +171,15 @@ def getStudentInfo(studentName, className, school):
         avgDelta = 0
     else:
         avgDelta = average - mostRecentReport[5]
+
+    if len(allMarks) == 0:
+        classAvg = 0
+    else:
+        total = 0
+        for mark in allMarks:
+            total += (mark[3] / mark[4]) * 100
+        classAvg = int(total / len(allMarks))
+
     conn.close()
     improvementOrder = []
     negativeOrder = []
@@ -172,17 +187,19 @@ def getStudentInfo(studentName, className, school):
     if avgDelta > 0:
         improvementOrder = ["performance"]
         positiveOrder = ["performance"]
-    elif avgDelta < 0:
-        negativeOrder = ["performance"]
-    else:
-        positiveOrder = ["performance"]
+    elif avgDelta <= 0:
+        if average > classAvg:
+            positiveOrder = ["performance"]
+        else:
+            negativeOrder = ["performance"]
+
     scores = {}
     lastImprovements = []
     for category in reportCategories:
         scores[category], li = generate_scores(category, fullReports)
         lastImprovements += li
-    scores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
-    revScores = dict(sorted(scores.items(), key=lambda item: item[1]))
+    scores = dict(sorted(scores.items(), key=lambda item: item[1]))
+    revScores = dict(sorted(scores.items(), key=lambda item: item[1], reverse=True))
     for category in scores:
         if category not in positiveOrder:
             positiveOrder.append(category)
@@ -191,7 +208,10 @@ def getStudentInfo(studentName, className, school):
             negativeOrder.append(category)
         if category not in improvementOrder:
             improvementOrder.append(category)
-    return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder
+
+    print(f"cavg: {classAvg}")
+
+    return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder, classAvg
 
 # Retrieve all the students in a class
 def getStudents(className, school):

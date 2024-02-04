@@ -267,7 +267,7 @@ h3 {
 }
 
 .inner-content {
-  width: 600pt;
+  width: 100%;
   text-align: left;
   /* Add additional styling for the inner content as needed */
 }
