@@ -32,7 +32,7 @@ function Report() {
                     <br></br>
                     <form onSubmit={onReturn}>
                         <p>
-                            <button type="submit">back</button>
+                            <button type="submit">Return back to Dashboard</button>
                         </p>
                     </form>
                 </div>

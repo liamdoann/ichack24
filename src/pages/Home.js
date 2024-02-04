@@ -16,9 +16,11 @@ function Home() {
 
     const [selectedClass, setSelectedClass] = useState('');
     const [studentNames, setStudentNames] = useState([]);
+    const [isSelected, setIsSelected] = useState(false);
     
 
     const handleSelectChange = async (event) => {
+      setIsSelected(true);
       setSelectedClass(event.target.value);
       var className = event.target.value;
       console.log("Selected class: " + className);
@@ -43,10 +45,9 @@ function Home() {
         <div class="content-below">
         <div className="Home">
           <div className="flexHeader">
-            <h2>Hello, {username}!</h2>
+            <h2>Welcome, {username}!</h2>
           </div>
 
-          <h4>Classes:</h4>
           <select value={selectedClass} onChange={handleSelectChange}>
             <option value="" disabled select>Select a class</option>
             {classes.map((className, index) => (
@@ -55,6 +56,8 @@ function Home() {
               </option>
             ))}
           </select>
+
+          {!isSelected && <p>Please select a class above to continue.</p>}
           {selectedClass &&
             <p>
               <DataTable data={studentNames} school={school} className={selectedClass} username={username} classes={classes} />
