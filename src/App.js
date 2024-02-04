@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Student from './pages/Student';
 import Report from './pages/Report';
+import SeatingPlan from './pages/seatingPlan';
 import PerformanceGraph from './pages/Graph';
 import { LineChart } from '@mui/x-charts';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/home" element={ <Home/> }/>
           <Route path="/student/" element={ <Student/> }/>
           <Route path="/report" element={ <Report/> }/>
+          <Route path="/seatingPlan" element={ <SeatingPlan/> }/>
         </Routes>
     </div>
   );

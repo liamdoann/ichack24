@@ -1,0 +1,26 @@
+.App {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .grid-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 500px); /* Set a fixed width for the cells (e.g., 100px) */
+    grid-gap: 5px;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .cell {
+    border: 1px solid #a8a1a1;
+    padding: 10px;
+    text-align: center;
+    width: 200px; /* Set the same width for each cell */
+  }
