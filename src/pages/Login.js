@@ -35,7 +35,7 @@ function Login() {
       <div className="Login">
         <div id="rcorners2" style={{height:'400px'}}>
         <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '220px' }}/>
-            
+
             <form onSubmit={handleSubmit}>
                 <p>
                     <h4 style={{marginBottom: '10px'}}>Please login to continue</h4>
