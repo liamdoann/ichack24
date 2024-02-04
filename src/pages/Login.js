@@ -13,18 +13,14 @@ function Login() {
 
     return (
       <div className="Login">
-        <div id="rcorners2">
-        <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '300px' }}/>
-            <h4>Sign in to use</h4>
+        <div id="rcorners2" style={{height:'400px'}}>
+        <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '220px' }}/>
+            
             <form onSubmit={handleSubmit}>
                 <p>
-                    <label>Username</label><br/>
-                    <input type="text" name="username" required />
-                </p>
-                <p>
-                    <label>Password</label>
-                    <br/>
-                    <input type="password" name="password" required />
+                    <h4>Please login to continue</h4>
+                    <input type="text" name="username" placeholder="username" required/>
+                    <input type="password" name="password" placeholder="password" required/>
                 </p>
                 <p>
                     <button type="submit">Login</button>
