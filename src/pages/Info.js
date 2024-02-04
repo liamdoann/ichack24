@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
 function Info({ title, text, setText, items, setItems, quotes }) {
-  // Prepopulated set of quotes
-  //const quotes = ['Quote 1', 'Quote 2', 'Quote 3'];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,16 +21,16 @@ function Info({ title, text, setText, items, setItems, quotes }) {
       </header>
       <form onSubmit={handleSubmit}>
         <input
-          list="quotes"
+          list={title}
           type="text"
           className="input-form"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <datalist id="quotes">
-          {quotes.map((quote, index) => (
-            <option key={index} value={quote}>
-              {quote}
+        <datalist id={title}>
+          {quotes.map((order, index) => (
+            <option key={index} value={order}>
+              {order}
             </option>
           ))}
         </datalist>
