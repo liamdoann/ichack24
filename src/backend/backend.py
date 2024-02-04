@@ -217,9 +217,9 @@ Over the course of the term, the student recieved an average of {report[5]}% in 
 
     prompt_end = f"""
 
-Overall, the teacher feels that the student peformed {report[4]} out of 5 in the class.
-Use this summary to generate a natural language report for the student from the perspective of the teacher in appoximately 100 words.
-Do not include any specific numbers in the report."""
+Use this summary to generate a natural language report from the perspective of the teacher addressing the student in appoximately 100 words.
+Do not include any specific numbers in the report.
+Begin the report with something similar to 'Over the course of the term, you have ...'"""
 
     return prompt_start + prompt_end
 
