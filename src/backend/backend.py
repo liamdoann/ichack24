@@ -26,7 +26,7 @@ def checkUserExists(username, password, conn):
     return school
 
 # Send the classes to the webpage
-def sendClasses(classes):
+def sendClasses(classes, school):
     # TODO()
     pass
 
@@ -35,8 +35,7 @@ def credentialError():
     # TODO()
     pass
 
-def retrieveTeacher(request):
-    username, password = retrieveCredentials(request)
+def retrieveTeacher(username, password):
     print(f"Requesting teacher: {username} with password: {password}")
     conn = connect('allTeachers')
     print(username, password)
@@ -47,6 +46,7 @@ def retrieveTeacher(request):
         print("Credential error")
         conn.close()
         return
+    school = school[0]
     conn.close()
     conn = connect(school)
     print("Connected to school database")
@@ -58,7 +58,7 @@ def retrieveTeacher(request):
     results = cursor.fetchall()
     print("Classes: \n", results)
     conn.close()
-    sendClasses(results)    # Send the classes to the webpage
+    sendClasses(results, school)    # Send the classes to the webpage
 
 # Retrieve the students in a class since the last report
 def getStudentAverage(school, studentId, classId):
