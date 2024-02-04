@@ -12,6 +12,7 @@ function DataTable({ data, school, className}) {
 };
 
   return (
+    <div class="table-container">
       <table>
           <thead>
               <tr>
@@ -30,6 +31,7 @@ function DataTable({ data, school, className}) {
               ))}
           </tbody>
       </table>
+    </div>
   );
 }
 

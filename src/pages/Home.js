@@ -39,7 +39,10 @@ function Home() {
 
     return (
       <div className="Home">
-        <h2>My Dashboard</h2>
+        <div className="flexHeader"><h2>My Dashboard</h2> <form>
+          <button onClick={onLogout} style={{width: '60px'}}>Logout</button>
+        </form></div>
+        
         <h4>Classes:</h4>
         <select value={selectedClass} onChange={handleSelectChange}>
             <option value="" disabled select>Select a class</option>
@@ -54,11 +57,7 @@ function Home() {
             <DataTable data={studentNames} school={school} className={selectedClass} />
           </p>}
         
-        <form>
-          <p>
-          <button onClick={onLogout}>Logout</button>
-          </p>
-        </form>
+       
       </div>
     );
   };

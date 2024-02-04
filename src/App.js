@@ -22,10 +22,6 @@ function App() {
 
   return (
     <div className="App"> 
-      <LineChart
-  series={[{ data: [null, null, 10, 11, 12] }]}
-  xAxis={[{ data: [0, 1, 2, 3, 4, 5, 6] }]}
-/>
         <Routes>
           <Route path="/" element={ <Login/> }/>
           <Route path="/home" element={ <Home/> }/>
