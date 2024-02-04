@@ -28,7 +28,7 @@ function SeatingPlan({ seatingPlanData }) {
 
     return (
         <div className="Seating Plan">
-        <h1>Generated Seating Plan:</h1>
+        <h2>Generated Seating Plan:</h2>
         <div className="grid-container">
         <div className="grid">
             {grid.map((row, rowIndex) => (
@@ -42,7 +42,8 @@ function SeatingPlan({ seatingPlanData }) {
             ))}
         </div>
         </div>
-        <h3 style={{alignContent: 'center'}}>Front</h3>
+        <div style={{textAlign: 'center'}}><h3 style={{textAlign: 'center'}}>Front</h3></div>
+        
         </div>
     );
 };
