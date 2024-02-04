@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import eduPlanner from './eduplanner.png';
 
 function Login() {
     const navigate = useNavigate();
-
-    const handleSubmit = (e) => { 
+    
+    const handleSubmit = async (e) => { 
         e.preventDefault();
+
         const data = new FormData(e.target);
-        navigate("/home", { state: { username: data.get('username') } });
+        const username = data.get('username');
+        const password = data.get('password');
+
+        const response = await fetch('/api/validate-login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password}),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+
+            if (data.success) {
+                navigate("/home", { state: { username : username, classes: data.classes, school: data.school } });
+            } else {
+                alert("Invalid credentials.");
+            }
+        } 
     }
 
     return (
@@ -29,6 +49,6 @@ function Login() {
             </div>
         </div>
     );
-  }
+}
 
 export default Login;

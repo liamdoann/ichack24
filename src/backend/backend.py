@@ -1,10 +1,10 @@
 import sqlite3
 import openai
 
-api_file = open("api-key", "r")
-api_key = api_file.readline()
-api_key.strip()
-api_file.close()
+# api_file = open("api-key", "r")
+# api_key = api_file.readline()
+# api_key.strip()
+# api_file.close()
 
 # Create a connection to the database
 def connect(dbID):
@@ -42,10 +42,9 @@ def retrieveTeacher(username, password):
     school = checkUserExists(username, password, conn)
     print(school)
     if school is None:
-        credentialError()   # If the user does not exist, return an error to the webpage
         print("Credential error")
         conn.close()
-        return
+        return None, False
     school = school[0]
     conn.close()
     conn = connect(school)

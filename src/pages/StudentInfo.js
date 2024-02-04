@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useLocation } from 'react';
 import Info from './Info';
 
 function StudentInfo() {
+  const { state } = useLocation();
+
   const [im, setIm] = useState('');
   const [itIm, setItIm] = useState([]);
   const [pos, setPos] = useState('');
@@ -12,7 +14,7 @@ function StudentInfo() {
   const [displayText, setDisplayText] = useState('');
 
   const handleClick = () => {
-    setDisplayText(`Negative: ${negIm}, Positive: ${posIm}, It: ${itIm}`);
+    setDisplayText(`${state} -- Negative: ${negIm}, Positive: ${posIm}, It: ${itIm}`);
   };
 
   return (

@@ -1,25 +1,20 @@
 import { React, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+ import { useNavigate, useLocation } from 'react-router-dom';
 import '../App.css';
 import DataTable from './Table';
 
 function Home() {
     const navigate = useNavigate();
 
-    const [classes, setClasses] = useState([]);
+    const location = useLocation();
+    const username = location.state ? location.state.username : null;
+    const classes = location.state ? location.state.classes : null;
+    const school = location.state ? location.state.school : null;
+
     const [selectedClass, setSelectedClass] = useState('');
-  
-    useEffect(() => {
-      // fetch('/get-classes')
-      //     .then(response => response.json())
-      //     .then(data => setClasses(data.classes));
-      const dummyClasses = ['Year 10 Maths', 'Year 11 Physics', 'Year 12 Chemistry'];
-      setClasses(dummyClasses);
-    }, []);
 
     const onLogout = (e) => { 
         e.preventDefault();
-        console.log("hello");
         navigate("/");
     }
 

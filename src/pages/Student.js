@@ -1,8 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import StudentInfo from './StudentInfo';
 
 function Student() {
-  const { state } = useLocation();
+    const { state } = useLocation();
 
   return (
       <div>
@@ -10,6 +11,8 @@ function Student() {
           <p>Name: {state.Name}</p>
           <p>Age: {state.Age}</p>
           <p>Occupation: {state.Occupation}</p>
+
+          <StudentInfo/>
       </div>
   );
 }

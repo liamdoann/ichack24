@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom"
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Student from './pages/Student';
+import PerformanceGraph from './pages/Graph';
+
+import { LineChart } from '@mui/x-charts';
 
 function App() {
     const [msg, setMsg] = useState([]);
@@ -18,8 +21,11 @@ function App() {
     }
 
   return (
-    <div className="App">
-    <p>{msg.message}</p>    
+    <div className="App"> 
+      <LineChart
+  series={[{ data: [null, null, 10, 11, 12] }]}
+  xAxis={[{ data: [0, 1, 2, 3, 4, 5, 6] }]}
+/>
         <Routes>
           <Route path="/" element={ <Login/> }/>
           <Route path="/home" element={ <Home/> }/>
