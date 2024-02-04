@@ -9,6 +9,8 @@ function Student() {
     const name = state ? state.name : null;
     const school = state ? state.school : null;
     const className = state ? state.className : null;
+    const username = state ? state.username : null;
+    const classes = state ? state.classes : null;
 
     const [lastImprovements, setLastImprovements] = useState([]);
     const [percentages, setPercentages] = useState([]);
@@ -30,7 +32,6 @@ function Student() {
         if (response.ok) {
             const data = await response.json();
             console.log(data);
-            // use data {'lastImprovements': lastImprovements, 'percentages': percentages, 'average': average, 'avgDelta': avgDelta, 'positiveOrder': positiveOrder, 'negativeOrder': negativeOrder, 'improvementOrder': improvementOrder}
             setLastImprovements(data.lastImprovements);
             setPercentages(data.percentages);
             setAverage(data.average);
@@ -39,7 +40,9 @@ function Student() {
             setNegativeOrder(data.negativeOrder);
             setImprovementOrder(data.improvementOrder);   
         }
-    }
+    } 
+
+    // upon submit: call submit-report, and then pass the report, alongside username and classes to the report page
 
   return (
       <div>

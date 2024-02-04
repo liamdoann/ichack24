@@ -203,19 +203,14 @@ def getStudents(className, school):
     return [student[0] for student in students]
 
 # Retrieve the information from the webpage and add a new report to the database
-def addReport(request):
-    studentId = request.form['studentId']
-    classId = request.form['classId']
-    score = request.form['score']
-    school = request.form['school']
+def addReport(studentName, className, score, school, positiveComments, negativeComments, improvementComments):
+    studentId = getStudentId(school, studentName)
+    classId = getClassId(school, className)
     average = getStudentAverage(school, studentId, classId)
     conn = connect(school)
     cursor = conn.cursor()
     cursor.execute(f"INSERT INTO reports (sid, cid, date, score, average) VALUES ({studentId}, {classId}, date('now'), {score}, {average})")
     rid = cursor.lastrowid
-    positiveComments = request.form['pComments']
-    negativeComments = request.form['nComments']
-    improvementComments = request.form['iComments']
     for comment in positiveComments:
         try:
             cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{reportCategories[comment][0]}')")
@@ -233,6 +228,8 @@ def addReport(request):
             cursor.execute(f"INSERT INTO reportComment (rid, comment) VALUES ({rid}, '{comment}')")
     conn.commit()
     conn.close()
+
+    return generateNLReport(rid, school)
 
 # Create a natural language prompt for the OpenAI API
 def create_prompt(report, comments):
