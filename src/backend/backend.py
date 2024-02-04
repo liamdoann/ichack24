@@ -1,5 +1,6 @@
 import sqlite3
 import openai
+from flask import Flask, jsonify
 
 # api_file = open("api-key", "r")
 # api_key = api_file.readline()
@@ -173,13 +174,16 @@ def getStudentInfo(studentId, classId, school):
     return lastImprovements, percentages, average, avgDelta, positiveOrder, negativeOrder, improvementOrder
 
 # Retrieve all the students in a class
-def getStudents(classId, school):
+def getStudents(className, school):
+    print(f"class: {className}, school: {school}")
     conn = connect(school)
     cursor = conn.cursor()
+    cursor.execute(f"SELECT cid FROM classes WHERE name = '{className}'")
+    classId = cursor.fetchone()[0]
     cursor.execute(f"SELECT name FROM student JOIN classEntry ON student.sid = classEntry.sid WHERE cid = {classId}")
     students = cursor.fetchall()
     conn.close()
-    return students
+    return [student[0] for student in students]
 
 # Retrieve the information from the webpage and add a new report to the database
 def addReport(request):
@@ -270,3 +274,4 @@ def getTeacherId(school, teacherName):
     teacherId = cursor.fetchone()
     conn.close()
     return teacherId[0]
+
