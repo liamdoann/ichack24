@@ -253,3 +253,20 @@ def generateNLReport(reportId, school):
 
     return chat_completion.choices[0].message.content
 
+# Retrieve a studentId from student name and school
+def getStudentId(school, studentName):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT sid FROM student WHERE name = '{studentName}'")
+    studentId = cursor.fetchone()
+    conn.close()
+    return studentId[0]
+
+# Retrieve a teacherId from teacher name and school
+def getTeacherId(school, teacherName):
+    conn = connect(school)
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT tid FROM teachers WHERE name = '{teacherName}'")
+    teacherId = cursor.fetchone()
+    conn.close()
+    return teacherId[0]
