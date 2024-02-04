@@ -2,10 +2,6 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Home"
-
 @app.route('/auth/login', methods=['GET'])
 def login():
     return {'message': 'Login'}
