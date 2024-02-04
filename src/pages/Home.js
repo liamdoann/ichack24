@@ -56,7 +56,7 @@ function Home() {
             ))}
           </select>
           {selectedClass &&
-            <p>Selected: {selectedClass}
+            <p>
               <DataTable data={studentNames} school={school} className={selectedClass} username={username} classes={classes} />
             </p>}
           </div>

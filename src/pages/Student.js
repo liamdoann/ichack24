@@ -57,9 +57,23 @@ function Student() {
     <TopBar />
       <div className="content-below">
         <div className="inner-content">
-          <h2>Student Details</h2>
-          <p style={{fontSize: '20pt'}}>Class: {className} | Average: {classAverage}</p>
-          <p style={{fontSize: '20pt'}}>Name: {name}<br/>Average: {average}<br/>Average Change: {avgDelta}</p>
+          <div>
+            <div style={{display:'flex', flexDirection:'row', alignItems:'flex-end', justifyContent:'space-between'}}>
+                <p style={{fontSize: '20pt', fontWeight: 'bold'}}>{name}</p><p style={{fontSize: '20pt'}}>{className}</p>
+            </div>
+
+            <p style={{fontSize: '10pt'}}>{name} got an average of {average}, compared to the class average of {classAverage}!</p>
+            <p style={{fontSize: '10pt'}}>
+                The average has changed by{' '}
+                <strong style={{color: avgDelta > 0 ? 'green' : avgDelta < 0 ? 'red' : 'black'}}>
+                    {avgDelta > 0 && '↑'}
+                    {avgDelta < 0 && '↓'}
+                    {Math.abs(avgDelta)}
+                </strong> 
+                {' '}since last time.
+            </p>    
+          </div>
+
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
         </div>
       </div>

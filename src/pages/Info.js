@@ -16,9 +16,7 @@ function Info({ title, text, setText, items, setItems, quotes }) {
 
   return (
     <div>
-      <header>
-        <h3>{title}</h3>
-      </header>
+      <h3>{title}</h3>
       <form onSubmit={handleSubmit}>
         <input
           list={title}
