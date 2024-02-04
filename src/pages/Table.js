@@ -9,7 +9,7 @@ function DataTable({ data, school, className, username, classes }) {
 
   const handleRowClick = (rowData) => {
     console.log(rowData)
-    navigate(`/student/`, { state: {name: rowData.Name, school: school, className: className} });
+    navigate(`/student/`, { state: {name: rowData.Name, school: school, className: className, username: username, classes: classes} });
     };
 
   return (

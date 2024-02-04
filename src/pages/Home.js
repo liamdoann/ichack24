@@ -11,6 +11,8 @@ function Home() {
     const classes = location.state ? location.state.classes : null;
     const school = location.state ? location.state.school : null;
 
+    console.log(classes);
+
     const [selectedClass, setSelectedClass] = useState('');
     const [studentNames, setStudentNames] = useState([]);
     const onLogout = (e) => { 
