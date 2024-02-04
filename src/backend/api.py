@@ -16,31 +16,11 @@ def validate_login():
     else:
         return jsonify({'success': False})
 
-@app.route('/get-classes', methods=['GET'])
-def get_classes():
-    args = request.args
-    usr = args['username']
-    pwd = args['password']
-    print(usr, file=sys.stdout)
-    print(pwd, file=sys.stdout)
-    classes, school = retrieveTeacher(usr, pwd)
-    print(classes, file=sys.stdout)
-    print(school, file=sys.stdout)
-    return jsonify(classes=classes, school=school)
-
-@app.route('/get-students', methods=['GET'])
+@app.route('/get-students', methods=['POST'])
 def get_students():
-    args = request.args
-    pass
+    data = request.get_json()
+    className = data.get('class')
+    school = data.get('school')
+    students = getStudents(className, school)
 
-@app.route('/auth/login', methods=['GET'])
-def login():
-    return {'message': 'Login'}
-
-@app.route('/auth/register', methods=['POST', 'GET'])
-def register():
-    pass
-
-@app.route('/logout', methods=['POST'])
-def logout():
-    pass
+    return jsonify({'students': [{'Name': name} for name in students]})

@@ -12,22 +12,30 @@ function Home() {
     const school = location.state ? location.state.school : null;
 
     const [selectedClass, setSelectedClass] = useState('');
-
+    const [studentNames, setStudentNames] = useState([]);
     const onLogout = (e) => { 
         e.preventDefault();
         navigate("/");
     }
 
-    const handleSelectChange = (event) => {
+    const handleSelectChange = async (event) => {
       setSelectedClass(event.target.value);
-      // TODO: fetch the data for the selected class
-      // then update the data table!
-    };
+      var className = event.target.value;
+      console.log("Selected class: " + className);
+      const response = await fetch('/api/get-students', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({class: className, school: school}),
+      });
 
-    const dummyData = [
-      { id: "j1", Name: 'John', Age: 30, Occupation: 'Engineer' },
-      { id: "j2", Name: 'Jane', Age: 28, Occupation: 'Doctor' },
-    ];
+      if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setStudentNames(data.students);
+      }
+    };
 
     return (
       <div className="Home">
@@ -46,7 +54,7 @@ function Home() {
         </select>
         {selectedClass && 
           <p>Selected: {selectedClass}
-            <DataTable data={dummyData} />
+            <DataTable data={studentNames} school={school} className={selectedClass} />
           </p>}
         
        
