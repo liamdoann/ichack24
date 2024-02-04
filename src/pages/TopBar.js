@@ -14,7 +14,7 @@ export default function TopBar() {
     <div class="top-bar">
       <div class="top-bar-content">
         <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '130px' }}/>
-        <button class="bar-button" onClick={onLogout} style={{ width: '60px' }}>Logout</button>
+        <button class="bar-button" onClick={onLogout} style={{ width: '60px', fontSize: '10pt' }}>Logout</button>
       </div>
     </div> 
   )

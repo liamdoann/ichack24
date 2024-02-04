@@ -55,28 +55,30 @@ function StudentInfo({ posOrder, negOrder, imOrder, name, className, school, use
       <Info title={"Positives"} text={pos} setText={setPos} items={posIm} setItems={setPosIm} quotes={posOrder} />
       <Info title={"Negatives"} text={neg} setText={setNeg} items={negIm} setItems={setNegIm} quotes={negOrder} />
       
+      <h3>Overall Score</h3>
+      <p style={{fontSize:'10pt'}}>Give them a rating from 1 to 5...</p>
       <form onSubmit={handleScoreSubmit}>
-        <p>Overall score:</p>
-
+        <div style={{fontSize: '14pt', display:'flex', width:'50%', justifyContent: 'space-between'}}>
         <label>
           1<input type="radio" name="score" value="1"></input>
         </label>
         <label>
-          2<input type="radio" name="score" value="2"></input>
+        2<input type="radio" name="score" value="2"></input>
         </label>
         <label>
-          3<input type="radio" name="score" value="3"></input>
+        3<input type="radio" name="score" value="3"></input>
         </label>
         <label>
-          4<input type="radio" name="score" value="4"></input>
+        4<input type="radio" name="score" value="4"></input>
         </label>
         <label>
-          5<input type="radio" name="score" value="5"></input>
+        5<input type="radio" name="score" value="5"></input>
         </label>
+        </div>
 
         <br></br>
       </form>
-      <button onClick={handleFormSubmit}>generate report</button>
+      <button class="report-button"  onClick={handleFormSubmit}>Generate report</button>
     </div>
   );
 }

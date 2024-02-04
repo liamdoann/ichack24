@@ -37,14 +37,14 @@ function Login() {
         <img src={eduPlanner} alt="EduPlanner Logo" style={{ width: '220px' }}/>
 
             <form onSubmit={handleSubmit}>
-                <p>
+                <p style={{paddingBottom:'10pt'}}>
                     <h4 style={{marginBottom: '10px'}}>Please login to continue</h4>
                     <input type="text" name="username" placeholder="username" required/>
                     <input type="password" name="password" placeholder="password" required/>
                     <button type="submit" style={{marginTop: '15px'}}>Login</button>
                 </p>
-                <p>
-                    
+                <p style={{fontSize:'8pt', paddingTop:'10pt', color:'grey'}}>
+                   Made with love by SCR Table 15. 
                 </p>
             </form>
             </div>

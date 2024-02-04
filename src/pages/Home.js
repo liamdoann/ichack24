@@ -45,10 +45,9 @@ function Home() {
         <div class="content-below">
         <div className="Home">
           <div className="flexHeader">
-            <h2>Welcome, {username}!</h2>
-          </div>
+            <h2>Welcome, <span style={{color: '#019472', fontWeight:'bold'}}>{username}</span>!</h2>
 
-          <select value={selectedClass} onChange={handleSelectChange}>
+            <select value={selectedClass} onChange={handleSelectChange}>
             <option value="" disabled select>Select a class</option>
             {classes.map((className, index) => (
               <option key={index} value={className}>
@@ -56,8 +55,15 @@ function Home() {
               </option>
             ))}
           </select>
+          </div>
 
-          {!isSelected && <p>Please select a class above to continue.</p>}
+          <p style={{fontSize:'12pt'}}>After selecting a class above, click on a student in the table to navigate to the information view.
+             There, you'll be able to generate a report using data from previous reports and positive/negative/improvement comments.
+          </p>
+
+          
+
+          {!isSelected && <p style={{alignContent:'center', color:'gray', fontSize:'10pt'}}>Please select a class above to continue.</p>}
           {selectedClass &&
             <p>
               <DataTable data={studentNames} school={school} className={selectedClass} username={username} classes={classes} />

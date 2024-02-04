@@ -52,6 +52,16 @@ input[type="text"], input[type="password"] {
   border: none;
 }
 
+.report-button {
+  width: 150px;
+  height: 24px;
+  border-radius: 5px;
+  background-color: #019472;
+  color: white;
+  text-align: center;
+  border: none;
+}
+
 .top-bar button {
   width: 300px;
   height: 24px;
@@ -179,6 +189,7 @@ tbody tr:hover {
 }
 
 .flexHeader {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -211,13 +222,6 @@ tbody tr:hover {
   display: flex;
   justify-content: space-between;
   /* Add additional styling for the top bar content as needed */
-}
-
-.bar-button {
-  background-color: #ffffff;
-  color: blue;
-  font-size: 15px;
-  cursor: pointer;
 }
 
 h2 {
@@ -289,4 +293,20 @@ h3 {
 
 .neutral {
   color: yellow;
+}
+
+.radio-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.radio-container {
+  text-align: center;
+}
+
+.radio-container input {
+  display: block;
+  margin: 0 auto;
 }

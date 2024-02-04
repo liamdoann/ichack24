@@ -62,7 +62,7 @@ function Student() {
                 <p style={{fontSize: '20pt', fontWeight: 'bold'}}>{name}</p><p style={{fontSize: '20pt'}}>{className}</p>
             </div>
 
-            <p style={{fontSize: '10pt'}}>{name} got an average of {average}, compared to the class average of {classAverage}!</p>
+            <p style={{fontSize: '10pt'}}>{name} got an average of {average}%, compared to the class average of {classAverage}%.</p>
             <p style={{fontSize: '10pt'}}>
                 The average has changed by{' '}
                 <strong style={{color: avgDelta > 0 ? 'green' : avgDelta < 0 ? 'red' : 'black'}}>
@@ -70,7 +70,7 @@ function Student() {
                     {avgDelta < 0 && '↓'}
                     {Math.abs(avgDelta)}
                 </strong> 
-                {' '}since last time.
+                %{' '}since last time.
             </p>    
           </div>
 
