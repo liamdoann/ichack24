@@ -27,11 +27,14 @@ function Home() {
     const dummyData = [
       { id: "j1", Name: 'John', Age: 30, Occupation: 'Engineer' },
       { id: "j2", Name: 'Jane', Age: 28, Occupation: 'Doctor' },
-  ];
+    ];
 
     return (
       <div className="Home">
-        <h2>My Dashboard</h2>
+        <div className="flexHeader"><h2>My Dashboard</h2> <form>
+          <button onClick={onLogout} style={{width: '60px'}}>Logout</button>
+        </form></div>
+        
         <h4>Classes:</h4>
         <select value={selectedClass} onChange={handleSelectChange}>
             <option value="" disabled select>Select a class</option>
@@ -46,11 +49,7 @@ function Home() {
             <DataTable data={dummyData} />
           </p>}
         
-        <form>
-          <p>
-          <button onClick={onLogout}>Logout</button>
-          </p>
-        </form>
+       
       </div>
     );
   };
