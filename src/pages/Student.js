@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StudentInfo from './StudentInfo';
 import TopBar from './TopBar';
+import StudentRow from './StudentRow';
 
 function Student() {
     const navigate = useNavigate();
@@ -56,7 +57,7 @@ function Student() {
       <div className="content-below">
         <div className="inner-content">
           <h2>Student Details</h2>
-          <p style={{fontSize: '20pt'}}>Name: {name}<br/>Average: {average}<br/>Average Change: {avgDelta}</p>
+          <StudentRow name={name} averageMark={average} averageChange={avgDelta}/>
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
         </div>
       </div>

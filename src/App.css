@@ -138,16 +138,21 @@ button:hover {
 }
 
 .table-container {
+  
   border-radius: 10px;
+  width: 100%;
   overflow: hidden;
 }
 
 table {
+  flex: 0 0 100%;
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
   text-align: left;
   font-size: 15px;
   border-bottom: 2px solid #019472;
+  flex: 1;
 }
 
 th {
@@ -220,10 +225,12 @@ h2 {
 }
 
 h3 {
-  font-size: 25px;
+  font-size: 16px;
 }
 
 .input-form {
+  padding-top:0pt;
+  padding-bottom: 10px;
   border: 1px solid #019472;
 }
 
@@ -263,4 +270,27 @@ h3 {
   width: 600pt;
   text-align: left;
   /* Add additional styling for the inner content as needed */
+}
+
+.student-row {
+  display: flex;
+  justify-content: space-between;
+  max-width: 450pt;
+}
+
+.student-name, .average-mark, .average-change {
+  /* Add additional styling for the student name, average mark, and average change as needed */
+  font-size: 12pt;
+}
+
+.up {
+  color: green;
+}
+
+.down {
+  color: red;
+}
+
+.neutral {
+  color: yellow;
 }
