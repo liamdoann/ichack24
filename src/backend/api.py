@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from backend import *
+from smt import solve
 import sys
 
 app = Flask(__name__)
@@ -46,3 +47,11 @@ def submit_report():
     improvementComments = data.get('improvementComments')
     report = addReport(studentName, className, score, school, positiveComments, negativeComments, improvementComments)
     return jsonify({'report': report})
+
+@app.route('/get-seating-plan', methods=['POST'])
+def get_seating_plan():
+    data = request.get_json()
+    success, result = solve(data) 
+    print(success, result)
+    print(jsonify(result))
+    return {'success': success, 'result' :result};

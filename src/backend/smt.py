@@ -12,7 +12,7 @@ def build_constraints(json_data: Dict[str, Any]):
 
     xs = [Int(f'{student}_x') for student in students]
     ys = [Int(f'{student}_y') for student in students]
-    
+    print(students)
     for i in range(len(students)):
         # Every student sits at a desk.
         constraints.append(Or(*[And(xs[i] == int(x), ys[i] == y) for x in desks.keys() for y in desks[x]]))
@@ -54,9 +54,9 @@ def solve(json_data: Dict[str, Any]):
             name, coord = str(x).split("_")
             print(name, coord)
             if name in result:
-                result[name][coord] = m[x]
+                result[name][coord] = m[x].as_long()
             else:
-                result[name] = {coord : m[x]}
+                result[name] = {coord : m[x].as_long()}
         
         return (True, result)
     

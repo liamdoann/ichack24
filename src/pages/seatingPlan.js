@@ -2,26 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Seating.css';
 
-const seatingPlanData = {
-  'student1': { 'y': 1, 'x': 1 },
-  'student2': { 'y': 2, 'x': 3 },
-  'student3': { 'y': 3, 'x': 2 },
-  // Add more students and coordinates as needed
-};
-
-function SeatingPlan() {
-
-    const navigate = useNavigate();
-    const location = useLocation();
-    const state = location.state ? location.state : null;
-    const seatingPlanData = state ? state.grid : null;
+function SeatingPlan({ seatingPlanData }) {
 
     const [grid, setGrid] = useState([]);
 
     useEffect(() => {
         // Extract unique row and column values from the seating plan
-        const rows = [...new Set(Object.values(seatingPlanData).map(item => item.y))];
-        const columns = [...new Set(Object.values(seatingPlanData).map(item => item.x))];
+        const rows = [...new Set(Object.values(seatingPlanData).map(item => item.x))];
+        const columns = [...new Set(Object.values(seatingPlanData).map(item => item.y))];
 
         // Create a 2D grid with empty cells
         const newGrid = Array.from({ length: rows.length }, () =>
@@ -30,8 +18,8 @@ function SeatingPlan() {
 
         // Populate the grid with student names at their coordinates
         Object.entries(seatingPlanData).forEach(([name, coordinates]) => {
-            const rowIndex = rows.indexOf(coordinates.y);
-            const colIndex = columns.indexOf(coordinates.x);
+            const rowIndex = rows.indexOf(coordinates.x);
+            const colIndex = columns.indexOf(coordinates.y);
             newGrid[rowIndex][colIndex] = name;
         });
 
@@ -39,8 +27,8 @@ function SeatingPlan() {
     }, []);
 
     return (
-        <div className="App">
-        <h1>Seating Plan</h1>
+        <div className="Seating Plan">
+        <h1>Generated Seating Plan:</h1>
         <div className="grid-container">
         <div className="grid">
             {grid.map((row, rowIndex) => (
@@ -54,6 +42,7 @@ function SeatingPlan() {
             ))}
         </div>
         </div>
+        <h3>Front</h3>
         </div>
     );
 };

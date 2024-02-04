@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Student from './pages/Student';
 import Report from './pages/Report';
-import SeatingPlan from './pages/seatingPlan';
+import SeatingPlan from './pages/SeatingPlan';
 import PerformanceGraph from './pages/Graph';
 import { LineChart } from '@mui/x-charts';
 
