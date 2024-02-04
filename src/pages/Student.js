@@ -74,6 +74,15 @@ function Student() {
             </p>    
           </div>
 
+          <h3>Past Improvements</h3>
+          <p style={{fontSize: '10pt', marginBlockEnd: '5pt'}}>Here are {name}'s improvements from their previous report.</p>
+
+          {lastImprovements.map((item, index) => (
+        <div className="element" key={index}>
+          <span>{item}</span>
+        </div>
+      ))}
+
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
         </div>
       </div>
