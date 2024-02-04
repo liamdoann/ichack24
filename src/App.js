@@ -6,18 +6,20 @@ import Login from './pages/Login';
 import Student from './pages/Student';
 
 function App() {
-    // const [msg, setMsg] = useState([]);
-    // useEffect(() => {
-    //     msgs();
-    // }, []);
-    // const msgs = async () => {
-    //     const response = await fetch('/auth/login');
-    //     const data = await response.json();
-    //     setMsg(data);
-    // }
+    const [msg, setMsg] = useState([]);
+    useEffect(() => {
+        msgs();
+    }, []);
+    const msgs = async () => {
+        const response = await fetch('/api/auth/login');
+        const data = await response.json();
+        console.log(response);
+        setMsg(data);
+    }
 
   return (
     <div className="App">
+    <p>{msg.message}</p>    
         <Routes>
           <Route path="/" element={ <Login/> }/>
           <Route path="/home" element={ <Home/> }/>
