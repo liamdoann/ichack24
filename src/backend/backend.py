@@ -235,12 +235,14 @@ def generateNLReport(reportId, school):
 
     openai.api_key = api_key
     prompt = create_prompt(report, comments)
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=500
+    chat_completion = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system", "content": "You are a model to convert a bullet-pointed end-of-term report into a natural-language one."},
+            {"role": "user", "content": prompt}
+        ]
     )
 
-    generated_report = response['choices'][0]['text']
+    return chat_completion.choices[0].message.content
 
-    return generated_report
+
