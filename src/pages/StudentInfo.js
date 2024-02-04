@@ -15,7 +15,9 @@ function StudentInfo({ posOrder, negOrder, imOrder, name, className, school, use
   const [negIm, setNegIm] = useState([]);
   const [score, setScore] = useState(3);
 
-  const [displayText, setDisplayText] = useState('');
+  console.log(posOrder);
+  console.log(negOrder);
+  console.log(imOrder);
 
   const handleScoreSubmit = (e) => {
     e.preventDefault();
