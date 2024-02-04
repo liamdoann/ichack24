@@ -2,10 +2,10 @@ import sqlite3
 import openai
 from flask import Flask, jsonify
 
-# api_file = open("api-key", "r")
-# api_key = api_file.readline()
-# api_key.strip()
-# api_file.close()
+api_file = open("api-key", "r")
+api_key = api_file.readline()
+api_key.strip()
+api_file.close()
 
 # Create a connection to the database
 def connect(dbID):
