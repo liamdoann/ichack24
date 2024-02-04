@@ -21,7 +21,7 @@ def retrieveCredentials(request):
 # Check if the user exists in the database
 def checkUserExists(username, password, conn):
     cursor = conn.cursor()
-    cursor.execute(f"SELECT school FROM teachers WHERE username = {username} AND password = {password}")
+    cursor.execute(f"SELECT school FROM teachers WHERE username = '{username}' AND password = '{password}'")
     school = cursor.fetchone()
     return school
 
@@ -51,14 +51,15 @@ def retrieveTeacher(username, password):
     conn = connect(school)
     print("Connected to school database")
     cursor = conn.cursor()
-    cursor.execute(f"SELECT tid FROM teachers WHERE username = {username}")
-    tid = cursor.fetchone()
+    cursor.execute(f"SELECT tid FROM teachers WHERE name = '{username}'")
+    tid = cursor.fetchone()[0]
     print(f"Teacher ID: {tid}")
-    cursor.execute(f"SELECT cid, name FROM classes WHERE tid = {tid}")
+    cursor.execute(f"SELECT name FROM classes WHERE tid = {tid}")
     results = cursor.fetchall()
-    print("Classes: \n", results)
+    newResults = [result[0] for result in results]
+    print("Classes: \n", newResults)
     conn.close()
-    sendClasses(results, school)    # Send the classes to the webpage
+    return newResults, school    # Send the classes to the webpage
 
 # Retrieve the students in a class since the last report
 def getStudentAverage(school, studentId, classId):
