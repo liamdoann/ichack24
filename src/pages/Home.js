@@ -2,9 +2,10 @@ import { React, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../App.css';
 import DataTable from './Table';
+import TopBar from './TopBar';
 
 function Home() {
-    const navigate = useNavigate();
+    
 
     const location = useLocation();
     const username = location.state ? location.state.username : null;
@@ -15,10 +16,7 @@ function Home() {
 
     const [selectedClass, setSelectedClass] = useState('');
     const [studentNames, setStudentNames] = useState([]);
-    const onLogout = (e) => { 
-        e.preventDefault();
-        navigate("/");
-    }
+    
 
     const handleSelectChange = async (event) => {
       setSelectedClass(event.target.value);
@@ -40,27 +38,30 @@ function Home() {
     };
 
     return (
-      <div className="Home">
-        <div className="flexHeader"><h2>Hello, {username}!</h2> <form>
-          <button onClick={onLogout} style={{width: '60px'}}>Logout</button>
-        </form></div>
-        
-        <h4>Classes:</h4>
-        <select value={selectedClass} onChange={handleSelectChange}>
+      <>
+      <TopBar /> 
+        <div class="content-below">
+        <div className="Home">
+          <div className="flexHeader">
+            <h2>Hello, {username}!</h2>
+          </div>
+
+          <h4>Classes:</h4>
+          <select value={selectedClass} onChange={handleSelectChange}>
             <option value="" disabled select>Select a class</option>
             {classes.map((className, index) => (
-                <option key={index} value={className}>
-                    {className}
-                </option>
+              <option key={index} value={className}>
+                {className}
+              </option>
             ))}
-        </select>
-        {selectedClass && 
-          <p>Selected: {selectedClass}
-            <DataTable data={studentNames} school={school} className={selectedClass} username={username} classes={classes} />
-          </p>}
-        
-       
-      </div>
+          </select>
+          {selectedClass &&
+            <p>Selected: {selectedClass}
+              <DataTable data={studentNames} school={school} className={selectedClass} username={username} classes={classes} />
+            </p>}
+          </div>
+        </div>
+      </>
     );
   };
   

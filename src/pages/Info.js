@@ -19,12 +19,13 @@ function Info({ title, text, setText, items, setItems, quotes }) {
   return (
     <div>
       <header>
-        <h1>{title}</h1>
+        <h3>{title}</h3>
       </header>
       <form onSubmit={handleSubmit}>
         <input
           list="quotes"
           type="text"
+          className="input-form"
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
@@ -35,12 +36,12 @@ function Info({ title, text, setText, items, setItems, quotes }) {
             </option>
           ))}
         </datalist>
-        <button type="submit">Submit</button>
+        <button className="submitItem"type="submit">→</button>
       </form>
       {items.map((item, index) => (
-        <div key={index}>
-          {item}
-          <button onClick={() => handleDelete(index)}>X</button>
+        <div className="element" key={index}>
+          <span>{item}</span>
+          <button className="delete-button" onClick={() => handleDelete(index)}>X</button>
         </div>
       ))}
     </div>

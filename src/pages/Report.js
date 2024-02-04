@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import TopBar from './TopBar';
 
 function Report() {
 
@@ -22,15 +23,22 @@ function Report() {
     }
 
   return (
-    <div className="Report">
-        {report}
-        <br></br>
-        <form onSubmit={onReturn}>
-            <p>
-                <button type="submit">back</button>
-            </p>
-        </form>
-    </div>
+    <>
+        <TopBar />
+        <div class="content-below">
+            <div className="inner-content">
+                <div className="Report">
+                    {report}
+                    <br></br>
+                    <form onSubmit={onReturn}>
+                        <p>
+                            <button type="submit">back</button>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </>
   );
 }
 

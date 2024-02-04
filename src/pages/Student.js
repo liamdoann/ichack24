@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import StudentInfo from './StudentInfo';
+import TopBar from './TopBar';
 
 function Student() {
     const navigate = useNavigate();
@@ -50,14 +51,16 @@ function Student() {
     
 
   return (
-      <div>
+    <>
+    <TopBar />
+      <div className="content-below">
+        <div className="inner-content">
           <h2>Student Details</h2>
-          <p>Name: {name}</p>
-          <p>Average: {average}</p>
-          <p>Average Change: {avgDelta}</p>
-
+          <p style={{fontSize: '20pt'}}>Name: {name}<br/>Average: {average}<br/>Average Change: {avgDelta}</p>
           <StudentInfo posOrder={positiveOrder} negOrder={negativeOrder} imOrder={improvementOrder} name={name} className={className} school={school} username={username} classes={classes} />
+        </div>
       </div>
+      </>
   );
 }
 
