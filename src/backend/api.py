@@ -21,22 +21,6 @@ def get_students():
     data = request.get_json()
     className = data.get('class')
     school = data.get('school')
-    print(className)
-    print(school)
     students = getStudents(className, school)
-    print(students)
-    ret = jsonify({'students': [{'Name': name} for name in students]})
-    print(ret)
-    return ret
 
-@app.route('/auth/login', methods=['GET'])
-def login():
-    return {'message': 'Login'}
-
-@app.route('/auth/register', methods=['POST', 'GET'])
-def register():
-    pass
-
-@app.route('/logout', methods=['POST'])
-def logout():
-    pass
+    return jsonify({'students': [{'Name': name} for name in students]})
