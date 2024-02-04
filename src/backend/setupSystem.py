@@ -4,7 +4,8 @@ import os
 # Setup the system
 def setup():
     # Create a database for all the teachers
-    
+    if os.path.exists('allTeachers.db'):
+        os.remove('allTeachers.db')
 
     conn = sqlite3.connect('allTeachers.db')
     cursor = conn.cursor()
