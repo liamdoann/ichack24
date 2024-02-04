@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Seating.css';
 
+
 function SeatingPlan({ seatingPlanData }) {
 
     const [grid, setGrid] = useState([]);
