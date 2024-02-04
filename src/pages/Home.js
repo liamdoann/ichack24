@@ -22,8 +22,6 @@ function Home() {
       setSelectedClass(event.target.value);
       var className = event.target.value;
       console.log("Selected class: " + className);
-      // TODO: fetch the data for the selected class
-      // then update the data table!
       const response = await fetch('/api/get-students', {
         method: 'POST',
         headers: {
@@ -53,7 +51,7 @@ function Home() {
         </select>
         {selectedClass && 
           <p>Selected: {selectedClass}
-            <DataTable data={studentNames} />
+            <DataTable data={studentNames} school={school} className={selectedClass} />
           </p>}
         
         <form>
